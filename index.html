@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MiniForum — прототип</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">MiniForum</div>
+    <nav class="nav">
+      <button id="btn-home" class="nav-btn">Главная</button>
+      <button id="btn-new" class="nav-btn">Создать тему</button>
+      <button id="btn-profile" class="nav-btn">Профиль</button>
+      <button id="btn-contacts" class="nav-btn">Контакты</button>
+    </nav>
+    <div class="auth-area" id="auth-area">
+      <span id="user-display"></span>
+      <button id="btn-login" class="nav-btn">Вход / Регистрация</button>
+      <button id="btn-logout" class="nav-btn" style="display:none">Выйти</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME / FEED -->
+    <section id="home" class="page">
+      <div class="searchbar">
+        <input id="search-input" placeholder="Поиск по темам..." />
+        <button id="search-btn">Найти</button>
+        <button id="clear-search">Сброс</button>
+      </div>
+
+      <div class="create-quick">
+        <button id="quick-create">+ Создать тему</button>
+      </div>
+
+      <div id="feed" class="feed"></div>
+    </section>
+
+    <!-- NEW TOPIC -->
+    <section id="new-topic" class="page" style="display:none">
+      <h2>Создать новую тему</h2>
+      <form id="topic-form">
+        <label>Заголовок
+          <input id="topic-title" required maxlength="120">
+        </label>
+        <label>Текст
+          <textarea id="topic-body" rows="6" required></textarea>
+        </label>
+        <label>Тег
+          <input id="topic-tag" placeholder="Например: Учеба, IT">
+        </label>
+        <div class="form-actions">
+          <button type="submit">Опубликовать</button>
+          <button type="button" id="cancel-new">Отмена</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TOPIC VIEW -->
+    <section id="topic-view" class="page" style="display:none">
+      <button id="back-to-feed">← Назад</button>
+      <div id="topic-content"></div>
+      <div id="comments-block">
+        <h3>Комментарии</h3>
+        <div id="comments-list"></div>
+
+        <form id="comment-form">
+          <input id="comment-text" placeholder="Ваш комментарий..." required>
+          <button type="submit">Отправить</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="page" style="display:none">
+      <h2>Профиль</h2>
+      <div id="profile-info"></div>
+      <h3>Мои темы</h3>
+      <div id="my-topics"></div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section id="contacts" class="page" style="display:none">
+      <h2>Контакты / Обратная связь</h2>
+      <form id="contact-form">
+        <label>Имя
+          <input id="contact-name" required>
+        </label>
+        <label>Email
+          <input id="contact-email" type="email" required>
+        </label>
+        <label>Сообщение
+          <textarea id="contact-message" rows="5" required></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit">Отправить</button>
+        </div>
+      </form>
+      <p class="note">Сообщения временно сохраняются в localStorage (демо).</p>
+    </section>
+
+    <!-- LOGIN MODAL -->
+    <div id="modal" class="modal" style="display:none">
+      <div class="modal-inner">
+        <h3>Вход / Регистрация</h3>
+        <form id="login-form">
+          <label>Имя
+            <input id="login-name" required>
+          </label>
+          <label>Email
+            <input id="login-email" type="email" required>
+          </label>
+          <div class="form-actions">
+            <button type="submit">Войти / Зарегистрироваться</button>
+            <button type="button" id="modal-close">Закрыть</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2025 MiniForum — учебный проект. Демо прототип на client-side.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
