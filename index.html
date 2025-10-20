@@ -1,131 +1,150 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MiniForum — прототип</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Forum</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Мини-оформление, чтобы выглядело красиво даже без styles.css */
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f6f8fa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #1976d2;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    nav button {
+      background: white;
+      color: #1976d2;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      margin-left: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    nav button:hover {
+      background: #e3f2fd;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .post {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .post:last-child {
+      border-bottom: none;
+    }
+
+    .post h3 {
+      margin: 0 0 5px;
+    }
+
+    .post p {
+      margin: 0 0 10px;
+    }
+
+    .meta {
+      font-size: 0.9em;
+      color: gray;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    form button {
+      background: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    form button:hover {
+      background: #125ca1;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">MiniForum</div>
-    <nav class="nav">
-      <button id="btn-home" class="nav-btn">Главная</button>
-      <button id="btn-new" class="nav-btn">Создать тему</button>
-      <button id="btn-profile" class="nav-btn">Профиль</button>
-      <button id="btn-contacts" class="nav-btn">Контакты</button>
+
+  <header>
+    <h1>💬 Mini Forum</h1>
+    <nav>
+      <button id="btn-home">Главная</button>
+      <button id="btn-new">Создать тему</button>
     </nav>
-    <div class="auth-area" id="auth-area">
-      <span id="user-display"></span>
-      <button id="btn-login" class="nav-btn">Вход / Регистрация</button>
-      <button id="btn-logout" class="nav-btn" style="display:none">Выйти</button>
-    </div>
   </header>
 
-  <main class="container">
-    <!-- HOME / FEED -->
-    <section id="home" class="page">
-      <div class="searchbar">
-        <input id="search-input" placeholder="Поиск по темам..." />
-        <button id="search-btn">Найти</button>
-        <button id="clear-search">Сброс</button>
-      </div>
-
-      <div class="create-quick">
-        <button id="quick-create">+ Создать тему</button>
-      </div>
-
-      <div id="feed" class="feed"></div>
-    </section>
-
-    <!-- NEW TOPIC -->
-    <section id="new-topic" class="page" style="display:none">
-      <h2>Создать новую тему</h2>
-      <form id="topic-form">
-        <label>Заголовок
-          <input id="topic-title" required maxlength="120">
-        </label>
-        <label>Текст
-          <textarea id="topic-body" rows="6" required></textarea>
-        </label>
-        <label>Тег
-          <input id="topic-tag" placeholder="Например: Учеба, IT">
-        </label>
-        <div class="form-actions">
-          <button type="submit">Опубликовать</button>
-          <button type="button" id="cancel-new">Отмена</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- TOPIC VIEW -->
-    <section id="topic-view" class="page" style="display:none">
-      <button id="back-to-feed">← Назад</button>
-      <div id="topic-content"></div>
-      <div id="comments-block">
-        <h3>Комментарии</h3>
-        <div id="comments-list"></div>
-
-        <form id="comment-form">
-          <input id="comment-text" placeholder="Ваш комментарий..." required>
-          <button type="submit">Отправить</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- PROFILE -->
-    <section id="profile" class="page" style="display:none">
-      <h2>Профиль</h2>
-      <div id="profile-info"></div>
-      <h3>Мои темы</h3>
-      <div id="my-topics"></div>
-    </section>
-
-    <!-- CONTACTS -->
-    <section id="contacts" class="page" style="display:none">
-      <h2>Контакты / Обратная связь</h2>
-      <form id="contact-form">
-        <label>Имя
-          <input id="contact-name" required>
-        </label>
-        <label>Email
-          <input id="contact-email" type="email" required>
-        </label>
-        <label>Сообщение
-          <textarea id="contact-message" rows="5" required></textarea>
-        </label>
-        <div class="form-actions">
-          <button type="submit">Отправить</button>
-        </div>
-      </form>
-      <p class="note">Сообщения временно сохраняются в localStorage (демо).</p>
-    </section>
-
-    <!-- LOGIN MODAL -->
-    <div id="modal" class="modal" style="display:none">
-      <div class="modal-inner">
-        <h3>Вход / Регистрация</h3>
-        <form id="login-form">
-          <label>Имя
-            <input id="login-name" required>
-          </label>
-          <label>Email
-            <input id="login-email" type="email" required>
-          </label>
-          <div class="form-actions">
-            <button type="submit">Войти / Зарегистрироваться</button>
-            <button type="button" id="modal-close">Закрыть</button>
-          </div>
-        </form>
-      </div>
+  <main>
+    <!-- Главная страница -->
+    <div id="home" class="page">
+      <h2>Темы форума</h2>
+      <div id="feed"></div>
     </div>
 
+    <!-- Страница создания темы -->
+    <div id="new-topic" class="page">
+      <h2>Создать новую тему</h2>
+      <form id="topic-form">
+        <input type="text" id="topic-title" placeholder="Заголовок темы" required />
+        <textarea id="topic-body" rows="5" placeholder="Описание / сообщение" required></textarea>
+        <input type="text" id="topic-tag" placeholder="Тег (например: советы, помощь...)" />
+        <button type="submit">Опубликовать</button>
+      </form>
+    </div>
   </main>
 
-  <footer class="footer">
-    © 2025 MiniForum — учебный проект. Демо прототип на client-side.
+  <footer>
+    <p>Создано с ❤️ от Star Hacker</p>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- Подключение JavaScript -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
